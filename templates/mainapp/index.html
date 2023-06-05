@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/product.css' %}">
+<div class="super_container">
+
+
+
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_slider_container">
+
+            <!-- Home Slider -->
+            <div class="owl-carousel owl-theme home_slider">
+
+                <!-- Slider Item -->
+                <div class="owl-item home_slider_item">
+                    <div class="home_slider_background" style="background-image:url({% static 'images/home_slider_1.jpg' %})"></div>
+                    <div class="home_slider_content_container">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="home_slider_content" data-animation-in="fadeIn"
+                                         data-animation-out="animate-out fadeOut">
+                                        <div class="home_slider_title">ElectroBot</div>
+                                        <div class="home_slider_subtitle">Жаңа сауда дүкені
+                                        </div>
+                                        <div class="button button_light home_button"><a href="{% url 'categories' %}">Бастау</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="avds">
+        <div class="avds_container d-flex flex-lg-row flex-column align-items-start justify-content-between">
+            <div class="avds_small">
+                <div class="avds_background" style="background-image:url({% static 'images/avds_small.jpg' %})"></div>
+                <div class="avds_small_inner">
+                    <div class="avds_discount_container">
+                        <img src="{% static 'images/discount.png' %}" alt="">
+                        <div>
+                            <div class="avds_discount">
+                                <div>10<span>%</span></div>
+                                <div>Жеңілдік</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="avds_small_content">
+                        <div class="avds_title">Смартфондар</div>
+                    </div>
+                </div>
+            </div>
+            <div class="avds_large">
+                <div class="avds_background" style="background-image:url({% static 'images/avds_large.jpg' %})"></div>
+                <div class="avds_large_container">
+                    <div class="avds_large_content">
+                        <div class="avds_title">Кәсіби камера</div>
+                        <div class="avds_text">Бұл жоғары сапалы кескін мен керемет техникалық сипаттамалардың үйлесімі.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products -->
+
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="product_grid">
+                        {% for product in products %}
+
+                        <!-- Product -->
+                        <div class="product">
+                            <div class="product_image"><img src="{{ product.image.url }}" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="{% url 'product' product.slug %}">{{ product.name }}</a></div>
+                                {% if order_count >= 3 %}
+						        <div class="details_discount">{{ product.price }} ₸</div>
+                                <div class="product_price">{{ product.price|percent:10 }} ₸</div>
+                                {% else %}
+                                <div class="product_price">{{ product.price }} ₸</div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad -->
+
+    <div class="avds_xl">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="avds_xl_container clearfix">
+                        <div class="avds_xl_background" style="background-image:url({% static 'images/avds_xl.jpg' %})"></div>
+                        <div class="avds_xl_content">
+                            <div class="avds_title">Таңғажайып құрылғылар</div>
+
+                            <div class="avds_link avds_xl_link"><a href="{% url 'categories' %}">Тағы қарау</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon Boxes -->
+
+    <div class="icon_boxes">
+        <div class="container">
+            <div class="row icon_box_row">
+
+                <!-- Icon Box -->
+                <div class="col-lg-4 icon_box_col">
+                    <div class="icon_box">
+                        <div class="icon_box_image"><img src="{% static 'images/icon_1.svg' %}" alt=""></div>
+                        <div class="icon_box_title">Жеткізу тегін</div>
+
+                    </div>
+                </div>
+
+                <!-- Icon Box -->
+                <div class="col-lg-4 icon_box_col">
+                    <div class="icon_box">
+                        <div class="icon_box_image"><img src="{% static 'images/icon_2.svg' %}" alt=""></div>
+                        <div class="icon_box_title">Тегін қайтарымдар</div>
+
+                    </div>
+                </div>
+
+                <!-- Icon Box -->
+                <div class="col-lg-4 icon_box_col">
+                    <div class="icon_box">
+                        <div class="icon_box_image"><img src="{% static 'images/icon_3.svg' %}" alt=""></div>
+                        <div class="icon_box_title">24сағ қолдау</div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+{% endblock content %}

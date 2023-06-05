@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/product.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+
+{% endblock css %}
+{% block content %}
+<div class="super_container">
+
+
+    <div class="home">
+        <div class="home_container">
+            <div class="home_background" style="background-image:url({% static 'images/categories.jpg' %})"></div>
+            <div class="home_content_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="home_content">
+                                <div class="home_title">{{ title }}<span>.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products -->
+
+    <div class="products">
+        <div class="container">
+
+            {% if object_list %}
+            <div class="row">
+                <div class="col">
+
+                    <div class="product_grid">
+
+
+                        <!-- Product -->
+                        {% for product in object_list %}
+                        <div class="product">
+                            <div class="product_image"><img src="{{ product.image.url }}" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="{% url 'product' product.slug %}">{{ product.name }}
+                                    </a></div>
+                                <div class="product_price">{{ product.price }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col text-center">
+                <div class="products_title">Сіздің сұраным бойынша тауарлар табылмады!</div>
+            </div>
+        </div>
+        {% endif %}
+        <br>
+        <br>
+    </div>
+</div>
+
+
+{% endblock content %}

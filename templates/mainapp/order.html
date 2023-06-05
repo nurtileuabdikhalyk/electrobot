@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/cart.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock css %}
+{% block content %}
+<br>
+<br>
+<div class="super_container">
+    <div class="home">
+		<div class="home_container">
+			<div class="home_background" style="background-image:url({% static 'images/cart.jpg' %})"></div>
+			<div class="home_content_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a href="{% url 'home' %}">Басты бет</a></li>
+										<li>Менің тапсырыстарым</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="cart_info">
+        <div class="container">
+            <table class="table" style="color:#1b1b1b">
+                <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col"></th>
+                    <th scope="col">Тауар</th>
+                    <th scope="col">Уақыт</th>
+                    <th scope="col">Бағасы</th>
+                    <th scope="col">Саны</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Статус</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td> <div class="cart_item_image">
+                                <div><img src="{{ order.product.image.url }}" alt=""></div>
+                            </div></td>
+                    <td>{{ order.product.name }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.price }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.quantity|multiply:order.price }} ₸</td>
+                    <td> {% if order.status %}
+                    <small class="badge badge-success">Орындалды</small>
+                    {% else %}
+                    <small class="badge badge-warning">Қабылданды</small>
+                    {% endif %}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock content %}

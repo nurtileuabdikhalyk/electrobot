@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/checkout.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/checkout_responsive.css' %}">
+{% endblock css %}
+{% block content %}
+<div class="super_container">
+
+
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_container">
+            <div class="home_background" style="background-image:url({% static 'images/cart.jpg' %})"></div>
+            <div class="home_content_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="home_content">
+                                <div class="breadcrumbs">
+                                    <ul>
+                                        <li><a href="{% url 'home' %}">Басты бет</a></li>
+                                        <li><a href="{% url 'cart' %}">Себет</a></li>
+                                        <li>{{ title }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout -->
+
+    <div class="checkout">
+        <div class="container">
+            <div class="row">
+
+                <!-- Billing Info -->
+                <div class="col-lg-6">
+                    <div class="billing checkout_section">
+                        <div class="section_title">Мекен-жай</div>
+                        <div class="section_subtitle">Өз мекен-жайыңызды енгізіңіз</div>
+                        <div class="checkout_form_container">
+                            <form id="checkout_form" action="{% url 'checkout' %}" class="checkout_form" method="post">
+                                {% csrf_token %}
+
+                                <div>
+                                    <label>Қала</label>
+                                    {{ form.city }}
+                                </div>
+                                <div>
+                                    <label>Көше</label>
+                                    {{ form.street }}
+                                </div>
+                                <div>
+                                    <label>Үй</label>
+                                    {{ form.house }}
+                                </div>
+                                <div>
+                                    <label>Пәтер номері</label>
+                                    {{ form.house_number }}
+                                </div>
+
+
+                                <div class="payment">
+                                    <div class="payment_options">
+                                        <label class="payment_option clearfix">Қолма-қол
+                                            <input type="radio" name="oplata" value="Қолма-қол">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="payment_option clearfix">Кредиттік карта
+                                            <input type="radio" name="oplata" value="Кредиттік карта">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="payment_option clearfix">QR-код
+                                            <input type="radio" name="oplata" value="QR-код">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+<input type="submit" class="button order_button" value="Тапсырыс беру">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Info -->
+
+                <div class="col-lg-6">
+                    <div class="order checkout_section">
+                        <div class="section_title">Сіздің тапсырысыңыз</div>
+                        <div class="section_subtitle">Тапсырыс туралы мәліметтер</div>
+
+                        <!-- Order details -->
+                        <div class="order_list_container">
+                            <div class="order_list_bar d-flex flex-row align-items-center justify-content-start">
+                                <div class="order_list_title">Сумма</div>
+                                {% if order_count >= 3 %}
+                                <div class="order_list_value ml-auto">{{ products|total_cart_price:request.session.cart|percent:10 }} ₸
+                                </div>
+                                {% else %}
+                                <div class="order_list_value ml-auto">{{ products|total_cart_price:request.session.cart }} ₸
+                                </div>
+                                {% endif %}
+                            </div>
+                            <ul class="order_list">
+                                <li class="d-flex flex-row align-items-center justify-content-start">
+                                    <div class="order_list_title">Жеткізу</div>
+                                    <div class="order_list_value ml-auto">Tегін</div>
+                                </li>
+                                <li class="d-flex flex-row align-items-center justify-content-start">
+                                    <div class="order_list_title">Толық сумма</div>
+                                     {% if order_count >= 3 %}
+
+                                    <div class="order_list_value ml-auto">
+                                        {{ products|total_cart_price:request.session.cart|percent:10 }} ₸
+                                    </div>
+                                    {% else %}
+                                    <div class="order_list_value ml-auto">
+                                        {{ products|total_cart_price:request.session.cart }} ₸
+                                    </div>
+                                    {% endif %}
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

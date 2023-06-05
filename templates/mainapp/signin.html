@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-6">
+                <div class="col text-center">
+
+                    <form id="checkout_form" class="checkout_form" method="post">
+                        {% csrf_token %}
+                        <br>
+                        <br>
+                        <div>
+                            <label>Логин</label>
+                            {{ form.login }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Құпия сөз</label>
+                            {{ form.password }}
+                        </div>
+                        <br>
+
+                        <input type="submit" class="button order_button" value="Кіру">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

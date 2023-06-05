@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/cart.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/cart_responsive.css' %}">
+{% endblock css %}
+{% block content %}
+
+<div class="super_container">
+
+
+
+
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_container">
+			<div class="home_background" style="background-image:url({% static 'images/cart.jpg' %})"></div>
+			<div class="home_content_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a href="{% url 'home' %}">Басты бет</a></li>
+										<li><a href="{% static 'categories' %}">Категория</a></li>
+										<li>Себет</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Cart Info -->
+
+	<div class="cart_info">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<!-- Column Titles -->
+					<div class="cart_info_columns clearfix">
+						<div class="cart_info_col cart_info_col_product">Тауар</div>
+						<div class="cart_info_col cart_info_col_price">Бағасы</div>
+						<div class="cart_info_col cart_info_col_quantity">Саны</div>
+						<div class="cart_info_col cart_info_col_total">Сумма</div>
+					</div>
+				</div>
+			</div>
+			<div class="row cart_items_row">
+				<div class="col">
+
+					<!-- Cart Item -->
+					{% for product in products %}
+					<div class="cart_item d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+						<!-- Name -->
+						<div class="cart_item_product d-flex flex-row align-items-center justify-content-start">
+							<div class="cart_item_image">
+								<div><img src="{{ product.image.url }}" alt=""></div>
+							</div>
+							<div class="cart_item_name_container">
+								<div class="cart_item_name"><a href="{% url 'product' product.slug %}">{{ product.name }}</a></div>
+								<div class="cart_item_edit"><a href="{% url 'categories' product.category.slug %}">{{ product.category.name }}</a></div>
+							</div>
+						</div>
+						<!-- Price -->
+						{% if order_count >= 3 %}
+                                <div class="cart_item_price">{{ product.price|percent:10 }} ₸</div>
+                                {% else %}
+                                <div class="cart_item_price">{{ product.price }} ₸</div>
+                                {% endif %}
+						<!-- Quantity -->
+						<div class="cart_item_quantity">
+							<div class="product_quantity_container">
+								<div class="product_quantity clearfix">
+									<span>Саны</span>
+									<input id="quantity_input" type="text" pattern="[0-9]*"
+                                       value="{{ product|cart_quantity:request.session.cart}}">
+
+								</div>
+							</div>
+						</div>
+						<!-- Total -->
+						{% if order_count >= 3 %}
+
+						<div class="cart_item_total">{{ product|price_total:request.session.cart|percent:10 }} ₸	</div>
+
+                                {% else %}
+						<div class="cart_item_total">{{ product|price_total:request.session.cart }} ₸	</div>
+                                {% endif %}
+
+					</div>{% endfor %}
+
+				</div>
+			</div>
+			<div class="row row_cart_buttons">
+				<div class="col">
+					<div class="cart_buttons d-flex flex-lg-row flex-column align-items-start justify-content-start">
+
+						<div class="button continue_shopping_button"><a href="{% url 'categories' %}">Сатып алуды жалғастыру</a></div>
+						{% if request.session.cart %}
+						<div class="cart_buttons_right ml-lg-auto">
+							<div class="button continue_shopping_button"><a href="{% url 'checkout' %}">Тапсырысты рәсімдеу</a></div>
+
+						</div>
+						{% endif %}
+					</div>
+
+
+				</div>
+			</div>
+			<br>
+		</div>
+	</div>
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-6">
+                <div class="col text-center">
+
+                    <form id="checkout_form" class="checkout_form" method="post">
+                        {% csrf_token %}
+                        <br>
+                        <br>
+                        <div>
+                            <label>Есіміңіз</label>
+                            {{ form.first_name }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Тегіңіз</label>
+                            {{ form.last_name }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Логин</label>
+                            {{ form.username }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Құпия сөз</label>
+                            {{ form.password1 }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Құпия сөзі қайталаңыз</label>
+                            {{ form.password2 }}
+                        </div>
+                        <br>
+                        <div>
+                            <label>Телефон номеріңіз</label>
+                            {{ form.phone }}
+                        </div>
+                        <br>
+
+                        <input type="submit" class="button order_button" value="Тіркелу">
+                        <br>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
